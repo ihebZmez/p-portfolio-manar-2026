@@ -9,11 +9,7 @@
   },
   "i18n": {
     "defaultLanguage": "fr",
-    "supportedLanguages": [
-      "fr",
-      "ar",
-      "en"
-    ],
+    "supportedLanguages": ["fr", "ar", "en"],
     "direction": "ltr"
   },
   "theme": {
@@ -24,6 +20,7 @@
     "darkMode": false
   },
   "contact": {
+    "website": "https://portfolio-manar-zmerli.vercel.app",
     "phone": "+216 54 11 18 22",
     "email": "zmerlimanar@gmail.com",
     "address": "Tunis, Tunisia",

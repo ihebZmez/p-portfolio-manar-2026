@@ -1,7 +1,6 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import Head from "next/head";
 import { useTranslations } from "next-intl";
 
 import Hero from "@/components/Hero";
@@ -46,19 +45,6 @@ const Home = () => {
 
   return (
     <>
-      <Head>
-        <title>{siteConfig.brand?.name || tMeta("title")}</title>
-        <meta name="description" content={tMeta("description")} />
-        <meta name="keywords" content={tMeta("keywords")} />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link
-          rel="canonical"
-          href={
-            (siteConfig.contact as any)?.website ||
-            "https://tn.linkedin.com/in/manar-zmerli-3961931a3"
-          }
-        />
-      </Head>
       <main className="relative mx-auto flex flex-col items-center justify-center overflow-hidden bg-background px-5 sm:px-10">
         <div className="layout-shell">
           {features.showNavbar !== false && <FloatingNav navItems={navItems} />}

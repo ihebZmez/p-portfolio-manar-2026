@@ -9,26 +9,44 @@ import "../globals.css";
 import { ThemeProvider } from "../provider";
 
 const inter = Inter({ subsets: ["latin"] });
+const productionUrl = "https://portfolio-manar-zmerli.vercel.app";
+const supportedLocales = ["fr", "en", "ar"] as const;
+
+const localeMap = {
+  en: { openGraphLocale: "en_US", htmlLang: "en" },
+  fr: { openGraphLocale: "fr_FR", htmlLang: "fr" },
+  ar: { openGraphLocale: "ar_TN", htmlLang: "ar" },
+} as const;
 
 export async function generateMetadata({
   params: { locale },
 }: {
   params: { locale: string };
 }): Promise<Metadata> {
-  const t = await getTranslations({ locale, namespace: "meta" });
-  const brandName = siteConfig.brand?.name || "MY_COMPANY";
-  // Fallback to empty string or you can add website to your siteConfig.contact
-  const websiteUrl =
-    (siteConfig.contact as any)?.website ||
-    "https://tn.linkedin.com/in/manar-zmerli-3961931a3";
+  const safeLocale = supportedLocales.includes(
+    locale as (typeof supportedLocales)[number],
+  )
+    ? (locale as (typeof supportedLocales)[number])
+    : "fr";
+
+  const t = await getTranslations({ locale: safeLocale, namespace: "meta" });
+  const brandName = siteConfig.brand?.name || "Manar Zmerli";
+  const websiteUrl = (siteConfig.contact as any)?.website || productionUrl;
+  const canonicalUrl = `${websiteUrl}/${safeLocale}`;
+  const alternateLanguages = Object.fromEntries(
+    supportedLocales.map((code) => [code, `${websiteUrl}/${code}`]),
+  ) as Record<string, string>;
 
   return {
+    metadataBase: new URL(websiteUrl),
+    applicationName: brandName,
     title: t("title"),
     description: t("description"),
     keywords: t("keywords"),
     authors: [{ name: brandName }],
     creator: brandName,
     publisher: brandName,
+    viewport: "width=device-width, initial-scale=1",
     robots: {
       index: true,
       follow: true,
@@ -42,8 +60,11 @@ export async function generateMetadata({
     },
     openGraph: {
       type: "website",
-      locale: locale,
-      url: websiteUrl,
+      locale: localeMap[safeLocale].openGraphLocale,
+      alternateLocale: supportedLocales.map(
+        (code) => localeMap[code].openGraphLocale,
+      ),
+      url: canonicalUrl,
       title: t("title"),
       description: t("description"),
       siteName: brandName,
@@ -54,7 +75,8 @@ export async function generateMetadata({
       description: t("description"),
     },
     alternates: {
-      canonical: websiteUrl,
+      canonical: canonicalUrl,
+      languages: alternateLanguages,
     },
   };
 }

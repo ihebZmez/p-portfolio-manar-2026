@@ -1,15 +1,16 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
+
+const siteUrl = "https://portfolio-manar-zmerli.vercel.app";
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
         userAgent: "*",
-        allow: "/",
-        disallow: ["/admin/", "/private/"],
-        crawlDelay: 1,
+        allow: ["/", "/fr", "/en", "/ar"],
+        disallow: ["/admin/", "/private/", "/api/", "/_next/"],
       },
     ],
-    sitemap: "https://portfolio-manar-zmerli.vercel.app/sitemap.xml",
+    sitemap: `${siteUrl}/sitemap.xml`,
   };
 }

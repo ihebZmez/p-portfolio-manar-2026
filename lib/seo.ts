@@ -2,7 +2,7 @@
 import en from "@/messages/en.json";
 import fr from "@/messages/fr.json";
 
-type Language = "en" | "fr";
+type Language = "en" | "fr" | "ar";
 
 interface SeoConfig {
   siteName: string;
@@ -25,18 +25,29 @@ interface SeoConfig {
 export const seoConfig: SeoConfig = {
   siteName: "Manar Zmerli",
   siteUrl: "https://portfolio-manar-zmerli.vercel.app",
-  description: "Data analyst based in Tunisia, specialized in data analysis, visualization, and business intelligence.",
-  keywords: ["data analyst", "Tunisia", "Power BI", "Python", "SQL", "data visualization", "business intelligence"],
+  description:
+    "Data analyst based in Tunisia, specialized in data analysis, visualization, and business intelligence.",
+  keywords: [
+    "data analyst",
+    "Tunisia",
+    "Power BI",
+    "Python",
+    "SQL",
+    "data visualization",
+    "business intelligence",
+  ],
   author: "Manar Zmerli",
   locale: {
-    en: "en_TN",
-    fr: "fr_TN",
+    en: "en_US",
+    fr: "fr_FR",
+    ar: "ar_TN",
   },
   openGraph: {
     type: "website",
     locale: {
-      en: "en_TN",
-      fr: "fr_TN",
+      en: "en_US",
+      fr: "fr_FR",
+      ar: "ar_TN",
     },
     url: "https://portfolio-manar-zmerli.vercel.app",
     siteName: "Manar Zmerli",
@@ -89,7 +100,11 @@ export const getPageMetadata = ({ lang, t }: PageMetadataParams) => {
 };
 
 // Helper to get metadata for current language
-export const getMetadataForPage = (page: keyof ReturnType<typeof getPageMetadata>, lang: Language, t: any) => {
+export const getMetadataForPage = (
+  page: keyof ReturnType<typeof getPageMetadata>,
+  lang: Language,
+  t: any,
+) => {
   const metadata = getPageMetadata({ lang, t })[page];
   return {
     title: metadata.title,
@@ -113,6 +128,7 @@ export const getMetadataForPage = (page: keyof ReturnType<typeof getPageMetadata
       languages: {
         en: `${seoConfig.siteUrl}/en`,
         fr: `${seoConfig.siteUrl}/fr`,
+        ar: `${seoConfig.siteUrl}/ar`,
       },
     },
   };
